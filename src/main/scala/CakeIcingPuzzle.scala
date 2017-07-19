@@ -4,7 +4,7 @@
 object CakeIcingPuzzle {
 
   val pieces: List[Boolean] = List.fill(360)(true)
-  val turns: List[Int] = List(60)
+  val turns: List[Int] = List(12,13,32)
 
   val normal = (x: Int, max: Int, min: Int) => x < max && x >= min
   val looper = (x: Int, max: Int, min: Int) => (x < pieces.length - 1 && x >= max) || (x < min && x >= 0)
@@ -22,16 +22,16 @@ object CakeIcingPuzzle {
             val res = zippedPieces.map {
                 case (dat, ind) => if (looper(ind, loc+move, loc)) !dat else dat
             }
-            rec(turn + 1, move)(res,loc + move)
+            rec(turn + 1, turns(turn%turns.length))(res,loc + move)
           case false =>
             val res = zippedPieces.map {
               case (dat, ind) => if (normal(ind, loc + move, loc)) !dat else dat
             }
-            rec(turn + 1, move)(res,loc + move)
+            rec(turn + 1, turns(turn%turns.length))(res,loc + move)
         }
     }
 
-    rec(0, 22)(pieces, 0)
+    rec(0, turns(0))(pieces, 0)
   }
 
 }
